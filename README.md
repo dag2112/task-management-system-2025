@@ -8,9 +8,12 @@ A full-stack Task Management System built with:
 - **Database**: PostgreSQL
 
 ## Team Members
-1. [Kaleb Teshome] - Backend Developer
-2. [Kaleab Bayeh] - Frontend Developer
-3. [Dagm Woldekidan] - Full Stack Developer
+1. [Dagm Woldekidan]
+2. [Geleta Bekele]
+3. [Kaleab Bayeh]  
+4. [kaleb Melaku] 
+5. [kaleb teshome]
+
 
 ## Technology Stack
 - Spring Boot 3.x
