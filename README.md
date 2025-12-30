@@ -1,75 +1,87 @@
 
-# Task Management System - Woldia University
+# ✅ Task Management System – Woldia University
 
-## Project Overview
-A full-stack Task Management System built with:
-- **Backend**: Spring Boot REST API
-- **Frontend**: Next.js
-- **Database**: PostgreSQL
-
-## Team Members
-1. [Dagm Woldekidan]
-2. [Geleta Bekele]
-3. [Kaleab Bayeh]  
-4. [kaleb Melaku] 
-5. [kaleb teshome]
-
-
-## Technology Stack
-- Spring Boot 3.x
-- Spring Security with JWT
-- PostgreSQL 15
-- Tailwind CSS
-- Axios
-
-## Getting Started
-# ✅ Task Management System
-
-A modern **Task Management System** built with **Next.js and React**, designed to help users organize, track, and manage tasks efficiently.  
-This project demonstrates clean UI design, reusable components, and scalable frontend architecture, making it ideal for learning, academic projects, and portfolio use.
+A full-stack **Task Management System** designed to help users efficiently create, manage, and track tasks.  
+This project is developed as an academic and portfolio project using modern backend and frontend technologies.
 
 ---
 
 ## 📌 Project Overview
 
-The Task Management System is a web-based application that provides users with an intuitive interface to manage their daily tasks.  
-It includes authentication-ready pages, a dashboard, task views, and a reusable navigation system.
+The Task Management System is a web-based application that allows users to manage tasks through a secure and user-friendly interface.
 
-The project is frontend-focused and structured to easily integrate with a backend API in the future.
+The system includes:
+- Secure authentication and authorization
+- Task creation, assignment, and tracking
+- Dashboard-based task overview
+- Scalable architecture for future enhancements
+
+---
+
+## 🧑‍💻 Team Members
+
+1. Dagm Woldekidan  
+2. Geleta Bekele  
+3. Kaleab Bayeh  
+4. Kaleb Melaku  
+5. Kaleb Teshome  
+
+---
+
+## 🛠️ Technology Stack
+
+### Backend
+- Spring Boot 3.x
+- Spring Security with JWT
+- PostgreSQL 15
+- JPA / Hibernate
+
+### Frontend
+- Next.js
+- React
+- Tailwind CSS
+- Axios
 
 ---
 
 ## 🎯 Project Objectives
 
-- Build a clean and user-friendly task management UI  
-- Practice component-based development using Next.js  
-- Create reusable and scalable UI components  
-- Prepare the project for backend integration  
-- Develop a professional GitHub portfolio project  
+- Build a secure and scalable task management system
+- Implement JWT-based authentication and authorization
+- Practice full-stack development using Spring Boot and Next.js
+- Develop a real-world academic and portfolio-ready project
+- Apply clean architecture and reusable components
 
 ---
 
 ## ✨ Features
 
-- 🔐 **Authentication Pages**
-  - Login
-  - Register
-- 📋 **Task Management**
-  - View and manage tasks
-- 📊 **Dashboard**
-  - Centralized task overview
-- 🧭 **Navigation Header**
-  - Home
-  - Login
-  - Register
-  - Tasks
-  - Dashboard
-- 🎨 **Hero Section**
-  - Landing page introduction
-  - Call-to-action buttons
-- 🧱 **Reusable Components**
-  - Header
-  - Hero Section
-  - Layout components
+### 🔐 Authentication & Security
+- Login and registration
+- JWT-based authentication
+- Role-based access control (Admin / User)
+
+### 📋 Task Management
+- Create, assign, and manage tasks
+- Task status tracking
+- View assigned tasks
+
+### 📊 Dashboard
+- Centralized overview of tasks
+- User-friendly navigation
+
+### 🧭 Navigation
+- Home
+- Login
+- Register
+- Tasks
+- Dashboard
+
+### 🧱 Reusable UI Components
+- Header
+- Hero Section
+- Layout components
 
 ---
+
+
