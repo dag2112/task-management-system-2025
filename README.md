@@ -42,8 +42,7 @@ The system includes:
 
 - Build a secure and scalable task management system
 - Implement JWT-based authentication and authorization
-- Practice full-stack development using Spring Boot and Next.js
-- Develop a real-world academic and portfolio-ready project
+- Practice full-stack development using Spring Boot and React.js
 - Apply clean architecture and reusable components
 
 
