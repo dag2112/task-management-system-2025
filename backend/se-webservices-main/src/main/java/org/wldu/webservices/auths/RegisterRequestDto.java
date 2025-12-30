@@ -21,11 +21,11 @@ public class RegisterRequestDto {
         this.password = password;
     }
 
-    public String getRole() {
+
+    public String getRole()
+    {
         return role;
     }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+    public void setRole(String role)
+    {this.role=role;}
 }

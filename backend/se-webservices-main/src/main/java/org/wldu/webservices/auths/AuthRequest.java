@@ -2,9 +2,13 @@ package org.wldu.webservices.auths;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-public class AuthRequest {
+// --- Request DTO ---
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class AuthRequest {
     private String username;
     private String password;
 
@@ -25,13 +29,17 @@ public class AuthRequest {
     }
 }
 
-
-
+// --- Response DTO ---
+@Data
+@NoArgsConstructor // Required for JSON serialization
 class AuthResponse {
     private String token;
+    private User user; // The missing piece that carries the ROLE
 
-    public AuthResponse(String token) {
+    // Constructor to match: return ResponseEntity.ok(new AuthResponse(token, user));
+    public AuthResponse(String token, User user) {
         this.token = token;
+        this.user = user;
     }
 
     public String getToken() {
@@ -40,5 +48,13 @@ class AuthResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,82 +1,46 @@
 package org.wldu.webservices.auths;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.web.bind.annotation.*;
-import org.wldu.webservices.dto.ResetPasswordDto;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
 public class RegistrationController {
 
-    private final UsersService userService;
+    private final UserService userService;
 
-    public RegistrationController(UsersService userService) {
+    public RegistrationController(UserService userService) {
         this.userService = userService;
     }
 
-
+    // ================= REGISTER =================
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDto request) {
-        Users user = userService.register(request);
-        return ResponseEntity.ok("User created successfully");
-    }
-    @PutMapping("/change-password")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> changePassword(
-            @RequestBody ResetPasswordDto request,
-            Authentication authentication   // ✅ injected by Spring
-    ) {
-        String username = authentication.getName(); // ✅ works now
-
-        boolean success = userService.changeOwnPassword(username, request);
-
-        if (success) {
-            return ResponseEntity.ok("Password changed successfully");
-        } else {
-            return ResponseEntity.badRequest().body("Current password is incorrect");
-        }
+        User user = userService.register(request);
+        return ResponseEntity.ok("User created successfully with ID: " + user.getId());
     }
 
-    // Admin resets user password (simple version)
-    @PutMapping("/admin-reset-password/{userId}")
-    public ResponseEntity<String> adminResetPassword(
-            @PathVariable Long userId,
-            @RequestBody String newPassword) {
-
-        userService.adminResetPassword(userId, newPassword);
-        return ResponseEntity.ok("Password reset successfully");
-    }
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}/activate")
-    public ResponseEntity<Users> activateUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.activateUser(id));
-    }
-
-    // ✅ Deactivate account (Admin only)
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}/deactivate")
-    public ResponseEntity<Users> deactivateUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.deactivateUser(id));
-    }
+    // ================= GET ALL USERS =================
     @GetMapping("/getAllUsers")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Users>> getAllUsers() {
-        List<Users> users = userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
+    // ================= UPDATE USER =================
     @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody RegisterRequestDto request) {
-        Users updatedUser = userService.updateUser(id, request);
+        User updatedUser = userService.updateUser(id, request);
         return ResponseEntity.ok(updatedUser);
     }
 
+    // ================= DELETE USER =================
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
@@ -84,11 +48,54 @@ public class RegistrationController {
         return ResponseEntity.ok("User deleted successfully");
     }
 
+    // ================= ASSIGN ROLE =================
     @PutMapping("/assign-role")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> assignRole(@RequestBody AssignRoleRequestDto request) {
         userService.assignRole(request.getUserId(), request.getRole());
-        return ResponseEntity.ok("Role updated successfully");
+        return ResponseEntity.ok("Role assigned successfully");
+    }
+
+    // ================= REVOKE ROLE =================
+    @PutMapping("/revoke-role")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> revokeRole(@RequestBody AssignRoleRequestDto request) {
+        userService.revokeRole(request.getUserId());
+        return ResponseEntity.ok("Role revoked successfully");
+    }
+
+    // ================= RESET PASSWORD =================
+    @PutMapping("/reset-password/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> resetPassword(@PathVariable Long id, @RequestBody Map<String, String> passwords) {
+        String oldPassword = passwords.get("oldPassword");
+        String newPassword = passwords.get("newPassword");
+        userService.resetPassword(id, oldPassword, newPassword);
+        return ResponseEntity.ok("Password reset successfully");
+    }
+
+    // ================= ACTIVATE USER =================
+    @PutMapping("/activate/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> activateUser(@PathVariable Long id) {
+        userService.activateUser(id);
+        return ResponseEntity.ok("User account activated successfully");
+    }
+
+    // ================= DEACTIVATE USER =================
+    @PutMapping("/deactivate/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
+        userService.deactivateUser(id);
+        return ResponseEntity.ok("User account deactivated successfully");
+    }
+
+
+    @PutMapping("/toggle-activation/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> toggleActivation(@PathVariable Long id) {
+        userService.toggleActivation(id);
+        return ResponseEntity.ok("User status updated successfully");
     }
 
 }

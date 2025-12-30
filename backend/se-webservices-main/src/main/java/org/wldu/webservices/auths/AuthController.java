@@ -4,59 +4,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository; // Needed to fetch role
 
     public AuthController(AuthenticationManager authenticationManager,
-                          JwtUtil jwtUtil) {
+                          JwtUtil jwtUtil,
+                          UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+
+        // 1. Authenticate the user (Checks password against DB)
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(), request.getPassword()));
 
-        // Get user details
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        // 2. Generate the JWT token
+        String token = jwtUtil.generateToken(request.getUsername());
 
-        // Get role from authorities and remove "ROLE_" prefix
-        String role = userDetails.getAuthorities().stream()
-                .findFirst()
-                .map(GrantedAuthority::getAuthority)
-                .map(auth -> {
-                    // Remove "ROLE_" prefix if present
-                    if (auth.startsWith("ROLE_")) {
-                        return auth.substring(5); // Remove first 5 chars "ROLE_"
-                    }
-                    return auth;
-                })
-                .orElse("VIEWER"); // Default without ROLE_ prefix
-
-        // ✅ Use UserDetails to generate token with authorities
-        String token = jwtUtil.generateToken(userDetails);
-
-        // Return both token and role
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-        response.put("role", role); // e.g., "ADMIN" not "ROLE_ADMIN"
-
-        return ResponseEntity.ok(response);
+        // 3. FETCH THE FULL USER OBJECT
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found in database after authentication"));
+        return ResponseEntity.ok(new AuthResponse(token, user));
     }
 }

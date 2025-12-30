@@ -6,21 +6,39 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Entity
-@Table(name = "users")
+@Table(name = "user12")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
-
+    @Size(min = 2, message= "username must be at least 2 characters")
     private String username;
+
+
     @Column(nullable = false)
-    private Boolean active = true;
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    private String password;
+
+    @Column(nullable = false)
+    private String role;
+
+
+    @Column(nullable = false)
+    private boolean active = true;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -30,10 +48,6 @@ public class Users {
         this.username = username;
     }
 
-    @Column(nullable = false)
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    private String password;
-
     public String getPassword() {
         return password;
     }
@@ -42,9 +56,6 @@ public class Users {
         this.password = password;
     }
 
-    @Column(nullable = false)
-    private String role;
-
     public String getRole() {
         return role;
     }
@@ -52,12 +63,13 @@ public class Users {
     public void setRole(String role) {
         this.role = role;
     }
-    public Boolean getActive() {
-        return active != null ? active : true; // Default to true if null
+
+    public boolean isActive() {
+        return active;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active != null ? active : true;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
 
