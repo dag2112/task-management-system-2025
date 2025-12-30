@@ -19,7 +19,6 @@ A full-stack Task Management System built with:
 - Spring Boot 3.x
 - Spring Security with JWT
 - PostgreSQL 15
-- Next.js 14
 - Tailwind CSS
 - Axios
 
