@@ -1,0 +1,48 @@
+package org.wldu.webservices.dtoFiles;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
+
+@Getter
+@Setter
+public class TaskRequest {
+    private String title;
+    private String description;
+    private Long assignedUserId;
+    private LocalDate dueDate;
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getAssignedUserId() {
+        return assignedUserId;
+    }
+
+    public void setAssignedUserId(Long assignedUserId) {
+        this.assignedUserId = assignedUserId;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+}
