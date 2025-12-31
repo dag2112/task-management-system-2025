@@ -1,143 +1,129 @@
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
   return (
-    <div className="flex flex-col min-h-screen font-sans text-gray-900 bg-white scroll-smooth">
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 scroll-smooth">
 
-      {/* Custom Animation */}
+      {/* Animations */}
       <style>
         {`
           @keyframes shimmer { 100% { transform: translateX(100%); } }
           .animate-shimmer { animation: shimmer 2s infinite; }
-          @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
           .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
         `}
       </style>
 
-      {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center h-[80vh] bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
-        <div className="relative z-10 text-center px-6 max-w-5xl animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl">
+      {/* HERO */}
+      <section className="relative flex items-center justify-center h-[85vh] bg-gradient-to-br from-emerald-700 via-teal-700 to-cyan-700">
+        <div className="text-center px-6 max-w-5xl animate-fade-in">
+          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-xl">
             Task Management <br />
-            <span className="text-yellow-400">System</span>
+            <span className="text-emerald-300">System</span>
           </h1>
-          <p className="text-gray-100 text-lg md:text-2xl mb-10 leading-relaxed font-light max-w-3xl mx-auto drop-shadow-md">
-            Manage users, create tasks, assign tasks, and track progress efficiently in one central platform.
+
+          <p className="text-emerald-50 text-lg md:text-2xl mb-12 max-w-3xl mx-auto">
+            Organize work, assign tasks, track progress, and collaborate efficiently.
           </p>
+
           <div className="flex justify-center gap-6 flex-wrap">
-            <button
-              onClick={() => navigate("/tasks")}
-              className="relative group overflow-hidden px-14 py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white rounded-full font-bold text-xl transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_35px_rgba(37,99,235,0.6)] hover:-translate-y-1 active:scale-95"
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-              <span className="relative flex items-center gap-3">Manage Tasks</span>
-            </button>
-            <button
-              onClick={() => navigate("/assign")}
-              className="relative group overflow-hidden px-14 py-4 bg-gradient-to-r from-green-600 via-green-500 to-teal-600 text-white rounded-full font-bold text-xl transition-all duration-300 shadow-[0_0_20px_rgba(5,150,105,0.4)] hover:shadow-[0_0_35px_rgba(5,150,105,0.6)] hover:-translate-y-1 active:scale-95"
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-              <span className="relative flex items-center gap-3">Assign Tasks</span>
-            </button>
+            {role === "ADMIN" && (
+              <>
+                <button
+                  onClick={() => navigate("/tasks")}
+                  className="px-12 py-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg shadow-lg hover:-translate-y-1 transition"
+                >
+                  Manage Tasks
+                </button>
+
+                <button
+                  onClick={() => navigate("/assign")}
+                  className="px-12 py-4 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold text-lg shadow-lg hover:-translate-y-1 transition"
+                >
+                  Assign Tasks
+                </button>
+              </>
+            )}
+
+            {role === "USER" && (
+              <button
+                onClick={() => navigate("/my-tasks")}
+                className="px-12 py-4 rounded-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-lg shadow-lg hover:-translate-y-1 transition"
+              >
+                View My Tasks
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Core Features */}
-      <section className="bg-white py-24 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">Core Features</h2>
-            <div className="h-1.5 w-24 bg-blue-600 mx-auto rounded-full"></div>
-          </div>
+      {/* FEATURES */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16 text-slate-800">
+            Core Features
+          </h2>
 
           <div className="grid md:grid-cols-3 gap-10">
             {[
               {
-                title: "Manage Categories",
-                text: "Create and organize categories for tasks to simplify assignment and tracking.",
+                title: "Category Management",
+                text: "Organize tasks efficiently using structured categories.",
               },
               {
-                title: "Create Tasks",
-                text: "Add tasks with title, description, due date, and assign them to categories before assigning to users.",
+                title: "Task Assignment",
+                text: "Assign work to users and track progress in real time.",
               },
               {
-                title: "Assign Tasks",
-                text: "Assign tasks to registered users and track their progress efficiently with status updates.",
+                title: "Comments & Notifications",
+                text: "Collaborate using comments and receive instant notifications.",
               },
-            ].map((item, index) => (
+            ].map((f, i) => (
               <div
-                key={index}
-                className="group bg-white border border-gray-100 shadow-xl shadow-gray-200/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-500 p-8"
+                key={i}
+                className="p-8 rounded-2xl border border-slate-200 shadow-md hover:shadow-xl hover:-translate-y-2 transition"
               >
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">{item.text}</p>
+                <h3 className="text-2xl font-bold mb-4 text-emerald-700">
+                  {f.title}
+                </h3>
+                <p className="text-slate-600 text-lg">{f.text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* About */}
-      <section id="about" className="bg-slate-50 py-28 px-6 border-y border-gray-200">
-        <div className="container mx-auto max-w-4xl text-center">
-          <span className="text-blue-600 font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Productivity Hub</span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900 tracking-tight">About Task Management System</h2>
-          <div className="text-gray-600 text-xl leading-relaxed font-light space-y-6">
-            <p>
-              This system allows admins to create tasks, manage categories, register users, and assign tasks. Users can see their assigned tasks and update progress easily.
-            </p>
-            <p>
-              Designed for teams and organizations, it provides a{" "}
-              <span className="text-blue-600 font-semibold italic">
-                secure, efficient, and user-friendly platform
-              </span>{" "}
-              to improve productivity, accountability, and project tracking.
-            </p>
-          </div>
+      {/* ABOUT */}
+      <section className="bg-slate-100 py-24 px-6 border-y border-slate-200">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-8 text-slate-800">
+            About the System
+          </h2>
+
+          <p className="text-xl text-slate-600 leading-relaxed">
+            A secure task management platform that helps teams collaborate,
+            track progress, and stay productive with role-based access and
+            notifications.
+          </p>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="bg-white py-24 px-6">
-        <div className="container mx-auto max-w-5xl">
-          <div className="bg-blue-950 rounded-[3rem] p-12 md:p-20 text-white flex flex-col items-center text-center shadow-2xl shadow-blue-900/30">
-            <h2 className="text-4xl md:text-5xl font-bold mb-10 tracking-tight">Get In Touch</h2>
-            <div className="grid md:grid-cols-3 gap-12 w-full">
-              <div className="space-y-3">
-                <p className="text-blue-400 font-semibold tracking-widest uppercase text-xs">Email Us</p>
-                <p className="text-lg font-medium tracking-tight">taskmanager@local.com</p>
-              </div>
-              <div className="space-y-3">
-                <p className="text-blue-400 font-semibold tracking-widest uppercase text-xs">Call Us</p>
-                <p className="text-lg font-medium">+251 912 345 678</p>
-              </div>
-              <div className="space-y-3">
-                <p className="text-blue-400 font-semibold tracking-widest uppercase text-xs">Visit Us</p>
-                <p className="text-lg font-medium">Woldia, Ethiopia</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-950 text-gray-500 py-16 mt-auto border-t border-gray-900">
-        <div className="container mx-auto px-6 text-center">
-          <div className="mb-8">
-            <h2 className="text-white text-3xl font-black italic tracking-tighter">
-              TASK <span className="text-blue-600">MANAGER</span>
-            </h2>
-          </div>
-          <p className="mb-6 text-sm">© {new Date().getFullYear()} Task Management System. All rights reserved.</p>
-          <div className="flex justify-center gap-8 text-sm font-medium">
-            <a href="#" className="hover:text-white transition-colors duration-300">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors duration-300">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors duration-300">Support</a>
-          </div>
+      {/* FOOTER */}
+      <footer className="bg-slate-900 text-slate-400 py-12 mt-auto">
+        <div className="text-center">
+          <h3 className="text-white text-2xl font-black mb-4">
+            TASK <span className="text-emerald-500">MANAGER</span>
+          </h3>
+          <p className="text-sm">
+            © {new Date().getFullYear()} Task Management System
+          </p>
         </div>
       </footer>
 
