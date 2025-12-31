@@ -3,7 +3,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://localhost:8081/api";
+const BASE_URL =
+  import.meta.env.VITE_BACKEND_URL || "https://localhost:8081/api";
 
 const Task = () => {
   // ================= STATES =================
@@ -143,9 +144,13 @@ const Task = () => {
   // ================= FILTERED TASKS =================
   const filteredTasks = tasks
     .filter((t) => (filterStatus === "ALL" ? true : t.status === filterStatus))
-    .filter((t) => t.title.toLowerCase().includes(filterTitle.toLowerCase()))
     .filter((t) =>
-      (t.categoryName || "").toLowerCase().includes(filterCategory.toLowerCase())
+      t.title.toLowerCase().includes(filterTitle.toLowerCase())
+    )
+    .filter((t) =>
+      (t.categoryName || "")
+        .toLowerCase()
+        .includes(filterCategory.toLowerCase())
     );
 
   const totalPages = Math.ceil(filteredTasks.length / itemsPerPage);
@@ -154,39 +159,36 @@ const Task = () => {
     currentPage * itemsPerPage
   );
 
-  // ================= STATUS BADGE STYLE =================
+  // ================= STATUS STYLE =================
   const statusStyle = (status) => {
     switch (status) {
       case "COMPLETED":
-        return "bg-green-100 text-green-700";
+        return "bg-green-900/40 text-green-400";
       case "IN_PROGRESS":
-        return "bg-yellow-100 text-yellow-700";
-      case "PENDING":
-        return "bg-gray-100 text-gray-700";
+        return "bg-yellow-900/40 text-yellow-400";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-gray-700/40 text-gray-300";
     }
   };
 
-  // ================= RENDER =================
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-10">
-      <ToastContainer position="top-right" autoClose={3000} />
+    <div className="min-h-screen bg-slate-900 text-gray-200 p-6 space-y-10">
+      <ToastContainer position="top-right" theme="dark" />
 
       {/* ================= CATEGORY CREATE ================= */}
-      <section className="bg-white p-6 rounded-xl shadow">
-        <h2 className="text-2xl font-bold mb-4">Create Category</h2>
+      <section className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <h2 className="text-2xl font-bold mb-4 text-blue-400">
+          Create Category
+        </h2>
         <div className="grid gap-3 md:grid-cols-2">
           <input
-            type="text"
-            className="border px-4 py-2 rounded-lg"
+            className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
             placeholder="Category Name"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
           />
           <input
-            type="text"
-            className="border px-4 py-2 rounded-lg"
+            className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
             placeholder="Description"
             value={categoryDesc}
             onChange={(e) => setCategoryDesc(e.target.value)}
@@ -194,36 +196,38 @@ const Task = () => {
         </div>
         <button
           onClick={createCategory}
-          className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+          className="mt-4 bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg text-white"
         >
           Create Category
         </button>
       </section>
 
       {/* ================= TASK CREATE ================= */}
-      <section className="bg-white p-6 rounded-xl shadow">
-        <h2 className="text-2xl font-bold mb-4">Create Task</h2>
+      <section className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <h2 className="text-2xl font-bold mb-4 text-green-400">
+          Create Task
+        </h2>
         <div className="grid gap-3 md:grid-cols-2">
           <input
-            className="border px-4 py-2 rounded-lg"
+            className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
             placeholder="Title"
             value={taskTitle}
             onChange={(e) => setTaskTitle(e.target.value)}
           />
           <input
-            className="border px-4 py-2 rounded-lg"
+            className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
             placeholder="Description"
             value={taskDesc}
             onChange={(e) => setTaskDesc(e.target.value)}
           />
           <input
             type="date"
-            className="border px-4 py-2 rounded-lg"
+            className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
             value={taskDueDate}
             onChange={(e) => setTaskDueDate(e.target.value)}
           />
           <select
-            className="border px-4 py-2 rounded-lg"
+            className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
             value={taskCategoryId}
             onChange={(e) => setTaskCategoryId(e.target.value)}
           >
@@ -237,32 +241,39 @@ const Task = () => {
         </div>
         <button
           onClick={createTask}
-          className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
+          className="mt-4 bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg text-white"
         >
           Create Task
         </button>
       </section>
 
       {/* ================= FILTERS ================= */}
-      <section className="bg-white p-6 rounded-xl shadow flex flex-col md:flex-row gap-4 items-center">
+      <section className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex flex-col md:flex-row gap-4">
         <input
-          type="text"
           placeholder="Filter by title..."
           value={filterTitle}
-          onChange={(e) => setFilterTitle(e.target.value)}
-          className="flex-1 border px-4 py-2 rounded-lg"
+          onChange={(e) => {
+            setFilterTitle(e.target.value);
+            setCurrentPage(1);
+          }}
+          className="flex-1 bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
         />
         <input
-          type="text"
           placeholder="Filter by category..."
           value={filterCategory}
-          onChange={(e) => setFilterCategory(e.target.value)}
-          className="flex-1 border px-4 py-2 rounded-lg"
+          onChange={(e) => {
+            setFilterCategory(e.target.value);
+            setCurrentPage(1);
+          }}
+          className="flex-1 bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
         />
         <select
-          className="border px-4 py-2 rounded-lg"
           value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
+          onChange={(e) => {
+            setFilterStatus(e.target.value);
+            setCurrentPage(1);
+          }}
+          className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg"
         >
           <option value="ALL">All</option>
           <option value="PENDING">Pending</option>
@@ -272,9 +283,9 @@ const Task = () => {
       </section>
 
       {/* ================= TASK LIST ================= */}
-      <section className="bg-white rounded-xl shadow overflow-hidden">
+      <section className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-700 text-gray-300">
             <tr>
               <th className="p-4 text-left">Title</th>
               <th className="p-4 text-left">Category</th>
@@ -282,148 +293,65 @@ const Task = () => {
               <th className="p-4 text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y">
-            {displayedTasks.length > 0 ? (
-              displayedTasks.map((t) => (
-                <tr key={t.id} className="hover:bg-gray-50">
-                  <td className="p-4 font-medium">{t.title}</td>
-                  <td className="p-4">{t.categoryName || "-"}</td>
-                  <td className="p-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${statusStyle(
-                        t.status
-                      )}`}
-                    >
-                      {t.status}
-                    </span>
-                  </td>
-                  <td className="p-4 flex justify-center gap-3">
-                    <button
-                      onClick={() =>
-                        setEditingTask({
-                          ...t,
-                          categoryId: categories.find(
-                            (c) => c.name === t.categoryName
-                          )?.id,
-                        })
-                      }
-                      className="px-3 py-1 bg-blue-600 text-white rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteTask(t.id)}
-                      className="px-3 py-1 bg-red-600 text-white rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={4} className="text-center py-8 text-gray-500">
-                  No tasks found
+          <tbody className="divide-y divide-slate-700">
+            {displayedTasks.map((t) => (
+              <tr key={t.id} className="hover:bg-slate-700/50">
+                <td className="p-4">{t.title}</td>
+                <td className="p-4">{t.categoryName || "-"}</td>
+                <td className="p-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${statusStyle(
+                      t.status
+                    )}`}
+                  >
+                    {t.status}
+                  </span>
+                </td>
+                <td className="p-4 flex justify-center gap-3">
+                  <button
+                    onClick={() =>
+                      setEditingTask({
+                        ...t,
+                        categoryId: categories.find(
+                          (c) => c.name === t.categoryName
+                        )?.id,
+                      })
+                    }
+                    className="bg-blue-600 px-3 py-1 rounded text-white"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteTask(t.id)}
+                    className="bg-red-600 px-3 py-1 rounded text-white"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
 
         {/* ================= PAGINATION ================= */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 p-4">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              className="px-3 py-1 border rounded"
-              disabled={currentPage === 1}
-            >
-              Prev
-            </button>
+          <div className="flex justify-center gap-2 p-4">
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`px-3 py-1 border rounded ${
-                  currentPage === i + 1 ? "bg-blue-600 text-white" : ""
+                className={`px-3 py-1 rounded border ${
+                  currentPage === i + 1
+                    ? "bg-blue-600 text-white"
+                    : "border-slate-600"
                 }`}
               >
                 {i + 1}
               </button>
             ))}
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              className="px-3 py-1 border rounded"
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
           </div>
         )}
       </section>
-
-      {/* ================= EDIT MODAL ================= */}
-      {editingTask && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-xl w-full max-w-md space-y-3">
-            <h3 className="text-xl font-bold">Edit Task</h3>
-
-            <input
-              className="border px-4 py-2 rounded-lg w-full"
-              value={editingTask.title}
-              onChange={(e) =>
-                setEditingTask({ ...editingTask, title: e.target.value })
-              }
-            />
-            <input
-              className="border px-4 py-2 rounded-lg w-full"
-              value={editingTask.description || ""}
-              onChange={(e) =>
-                setEditingTask({ ...editingTask, description: e.target.value })
-              }
-            />
-            <input
-              type="date"
-              className="border px-4 py-2 rounded-lg w-full"
-              value={editingTask.dueDate || ""}
-              onChange={(e) =>
-                setEditingTask({ ...editingTask, dueDate: e.target.value })
-              }
-            />
-            <select
-              className="border px-4 py-2 rounded-lg w-full"
-              value={editingTask.categoryId || ""}
-              onChange={(e) =>
-                setEditingTask({ ...editingTask, categoryId: e.target.value })
-              }
-            >
-              <option value="">Select Category</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-
-            <div className="flex justify-end gap-3 pt-2">
-              <button
-                onClick={() => setEditingTask(null)}
-                className="px-4 py-2 border rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={updateTask}
-                className="px-4 py-2 bg-green-600 text-white rounded"
-              >
-                Update
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
