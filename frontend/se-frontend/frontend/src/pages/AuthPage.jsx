@@ -22,23 +22,20 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Username validation for registration
     if (!isLogin && form.username.length < 2) {
       setMessage({ text: "Username must be at least 2 characters.", type: "error" });
       return;
     }
-    // Password validation for registration
+
     if (!isLogin && form.password.length < 6) {
       setMessage({ text: "Password must be at least 6 characters.", type: "error" });
       return;
     }
 
     setLoading(true);
-    setMessage({ text: "", type: "" });
 
     try {
       if (isLogin) {
-        // LOGIN
         const res = await axios.post(
           `${BASE_URL}/auth/login`,
           { username: form.username, password: form.password },
@@ -46,7 +43,7 @@ const AuthPage = () => {
         );
 
         const token = res?.data?.token || res?.data?.jwt;
-        const user = res?.data?.user || res?.data?.data || { role: "USER" };
+        const user = res?.data?.user || { role: "USER" };
 
         if (!token) throw new Error("Invalid username/password");
 
@@ -54,11 +51,8 @@ const AuthPage = () => {
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("role", user.role);
 
-        // ROLE-BASED REDIRECT
-        if (user.role === "ADMIN") navigate("/dashboard");
-        else navigate("/dashboard");
+        navigate("/dashboard");
       } else {
-        // REGISTER
         await axios.post(
           `${BASE_URL}/user/register`,
           { username: form.username, password: form.password },
@@ -70,20 +64,18 @@ const AuthPage = () => {
         setMessage({ text: "Account created successfully! Please login.", type: "success" });
       }
     } catch (err) {
-      let msg = "Authentication failed";
-      if (err.response) {
-        if (isLogin) msg = "Invalid username/password";
-        else msg = err.response.status === 403 ? "Username already exists" : err.response.data?.message || "Registration failed";
-      } else msg = err.message || msg;
-      setMessage({ text: msg, type: "error" });
+      setMessage({
+        text: isLogin ? "Invalid username or password" : "Registration failed",
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      {/* Animated Header */}
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-slate-100 px-4">
+      {/* Header */}
       <motion.div
         className="flex items-center mb-8 space-x-3"
         initial={{ scale: 0 }}
@@ -91,21 +83,29 @@ const AuthPage = () => {
         transition={{ type: "spring", stiffness: 150, damping: 10 }}
       >
         <motion.div
-          className="text-blue-600 text-4xl"
+          className="text-indigo-400 text-4xl"
           animate={{ rotate: [0, 15, -15, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
           <FaTasks />
         </motion.div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800">Task Management System</h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold">
+          Task <span className="text-indigo-400">Management</span> System
+        </h1>
       </motion.div>
 
       {/* Auth Card */}
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-center mb-6">{isLogin ? "Login" : "Create Account"}</h2>
+      <div className="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl shadow-xl p-8">
+        <h2 className="text-2xl font-bold text-center mb-6">
+          {isLogin ? "Login" : "Create Account"}
+        </h2>
 
         {message.text && (
-          <div className={`mb-4 font-medium text-center ${message.type === "error" ? "text-red-600" : "text-green-600"}`}>
+          <div
+            className={`mb-4 text-center font-medium ${
+              message.type === "error" ? "text-red-400" : "text-green-400"
+            }`}
+          >
             {message.text}
           </div>
         )}
@@ -118,7 +118,7 @@ const AuthPage = () => {
             value={form.username}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
+            className="w-full bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
           />
 
           <input
@@ -128,22 +128,26 @@ const AuthPage = () => {
             value={form.password}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
+            className="w-full bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 rounded-lg text-white transition ${loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}`}
+            className={`w-full py-2 rounded-lg font-bold transition ${
+              loading
+                ? "bg-slate-600 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
           >
             {loading ? "Please wait..." : isLogin ? "Login" : "Register"}
           </button>
         </form>
 
-        <p className="text-center text-sm mt-6">
+        <p className="text-center text-sm mt-6 text-slate-400">
           {isLogin ? "Don’t have an account?" : "Already have an account?"}
           <span
-            className="text-blue-600 cursor-pointer ml-1 hover:underline"
+            className="text-indigo-400 cursor-pointer ml-1 hover:underline"
             onClick={() => {
               setIsLogin(!isLogin);
               setMessage({ text: "", type: "" });
