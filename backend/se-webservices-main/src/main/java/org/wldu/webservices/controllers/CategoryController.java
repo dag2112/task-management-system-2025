@@ -1,5 +1,6 @@
 package org.wldu.webservices.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ public class CategoryController {
     // ✅ Create category
     @PostMapping("/create-categories")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Category> create(@RequestBody Category category) {
+    public ResponseEntity<Category> create(@Valid @RequestBody Category category) {
         return ResponseEntity.ok(categoryService.createCategory(category));
     }
 

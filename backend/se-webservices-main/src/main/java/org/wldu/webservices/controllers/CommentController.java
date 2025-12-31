@@ -1,5 +1,6 @@
 package org.wldu.webservices.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -21,7 +22,8 @@ public class CommentController {
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public void addComment(
             @PathVariable Long taskId,
-            @RequestBody CommentRequest request,
+            @Valid @RequestBody CommentRequest request,
+
             Authentication auth
     ) {
         String username = auth.getName();
