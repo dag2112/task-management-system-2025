@@ -14,19 +14,19 @@ import AdminTasks from "./pages/AdminTasks";
 import UserTasks from "./pages/UserTasks";
 import TaskComments from "./pages/TaskComments";
 
-// 1. This component checks if the user is logged in
+// 1. This component checks if the user is logged in 
 function ProtectedRoute({ children }) {
-  // It looks for the "token" you set during login
+  // It looks for the "token" you set during login 
   const isAuthenticated = localStorage.getItem("token"); 
   
   if (!isAuthenticated) {
-    // If no token, send them back to the Login page ("/")
+    // If no token, send them back to the Login page ("/") 
     return <Navigate to="/" replace />;
   }
   return children;
 }
 
-// 2. This component wraps the Navbar and spacing for all internal pages
+// 2. This component wraps the Navbar and spacing for all internal pages 
 function Layout({ children }) {
   return (
     <>
@@ -37,7 +37,7 @@ function Layout({ children }) {
   );
 }
 
-// 3. This handles the logic for hiding Navbar and routing permissions
+// 3. This handles the logic for hiding Navbar and routing permissions 
 function AppWrapper() {
   const location = useLocation();
 
