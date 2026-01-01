@@ -89,7 +89,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Menu */}
+        {/* Menu  */}
         <nav className="hidden md:flex space-x-8">
           {filteredMenu.map((item) => {
             const isActive = location.pathname === item.path;
@@ -111,7 +111,7 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Auth */}
+        {/* Auth  */}
         <div>
           {isLoggedIn ? (
             <button
