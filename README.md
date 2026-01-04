@@ -114,6 +114,7 @@ Contains security-related classes, including JWT authentication, authorization c
 
 ### **📁 exception/**
 Contains custom exceptions and a global exception handler for consistent error responses across the application.
+
 ## Frontend
 
 ## 📁 React Application Structure
@@ -167,28 +168,28 @@ The application entry point:
 ### Installation Steps
 1. **Clone the Repository**
 
-## Backend Setup
+### Backend Setup
 cd backend
 ## Configure database connection in application.properties
 ## Update database URL, username, and password
 
-## Build and run
+### Build and run
 mvn clean install
 mvn spring-boot:run
 
-## The backend will start on default port
+### The backend will start on default port
 
-## Frontend Setup
+### Frontend Setup
 cd frontend
-## Install dependencies
+### Install dependencies
 npm install
 
-## Start development server
+### Start development server
 npm run dev
 
 ## The frontend will start on default port 
 
-# API Endpoints
+## API Endpoints
 
 ## User Management
 
@@ -392,6 +393,7 @@ npm run dev
 
 ## Database Entity Relationships
 <img width="628" height="664" alt="image" src="https://github.com/user-attachments/assets/ed3ade55-9d5f-4102-a292-55ceb2f8d533" />
+
 ## User Activation Toggle Flow
 <img width="894" height="583" alt="image" src="https://github.com/user-attachments/assets/602c23e5-11cf-40e7-a8b4-d9cb92e1dd2e" />
 
