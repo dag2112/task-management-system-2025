@@ -97,13 +97,58 @@ A secure and scalable Task Management System built with Spring Boot REST API and
 ## 🗂️ Project Structure
 
 ### Backend Structure
-
 src/main/java/com/taskmanagement/
-#├── controller/             # REST controllers
-#├── service/               # Business logic layer
-#├── repository/            # Data access layer
-#├── entities/                 # JPA entities
-#├── dto/                   # Data Transfer Objects
-#├── Auths/              # Security configuration
-#├── exception/             # Exception handling
+├── 📁 controller/ # REST controllers
+│ ├── TaskController.java # Task-related endpoints
+│ ├── ProjectController.java # Project-related endpoints
+│ ├── UserController.java # User management endpoints
+│ ├── AuthController.java # Authentication endpoints
+│ └── CommentController.java # Task comment endpoints
+├── 📁 service/ # Business logic layer
+│ ├── TaskService.java # Task business logic
+│ ├── ProjectService.java # Project business logic
+│ ├── UserService.java # User business logic
+│ ├── AuthService.java # Authentication logic
+│ ├── NotificationService.java # Notification logic
+│ └── CommentService.java # Comment business logic
+├── 📁 repository/ # Data access layer
+│ ├── TaskRepository.java # Task data access
+│ ├── ProjectRepository.java # Project data access
+│ ├── UserRepository.java # User data access
+│ └── CommentRepository.java # Comment data access
+├── 📁 model/ # JPA entities
+│ ├── Task.java # Task entity
+│ ├── Project.java # Project entity
+│ ├── User.java # User entity
+│ ├── Comment.java # Comment entity
+│ ├── Role.java # Role entity
+│ └── Notification.java # Notification entity
+├── 📁 dto/ # Data Transfer Objects
+│ ├── 📁 request/ # Request DTOs
+│ │ ├── LoginRequest.java # Login request
+│ │ ├── RegisterRequest.java # Registration request
+│ │ ├── TaskRequest.java # Task creation/update
+│ │ └── ProjectRequest.java # Project creation/update
+│ └── 📁 response/ # Response DTOs
+│ ├── TaskResponse.java # Task response
+│ ├── ProjectResponse.java # Project response
+│ ├── UserResponse.java # User response
+│ └── AuthResponse.java # Authentication response
+├── 📁 security/ # Security configuration
+│ ├── JwtAuthenticationFilter.java # JWT filter
+│ ├── JwtTokenProvider.java # JWT token utilities
+│ ├── SecurityConfig.java # Security configuration
+│ ├── UserDetailsServiceImpl.java # Custom user details
+│ └── WebSecurityConfig.java # Web security config
+├── 📁 exception/ # Exception handling
+│ ├── GlobalExceptionHandler.java # Global exception handler
+│ ├── ResourceNotFoundException.java # Resource not found exception
+│ ├── BadRequestException.java # Bad request exception
+│ ├── UnauthorizedException.java # Unauthorized exception
+│ └── ErrorResponse.java # Error response structure
+└── 📁 util/ # Utility classes
+├── Constants.java # Application constants
+├── DateTimeUtils.java # Date/time utilities
+├── ValidationUtils.java # Validation utilities
+└── PaginationUtils.java # Pagination utilities
 
