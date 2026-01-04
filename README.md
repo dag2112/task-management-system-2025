@@ -169,24 +169,24 @@ The application entry point:
 
 ## Backend Setup
 cd backend
-# Configure database connection in application.properties
-# Update database URL, username, and password
+## Configure database connection in application.properties
+## Update database URL, username, and password
 
-# Build and run
+## Build and run
 mvn clean install
 mvn spring-boot:run
 
-# The backend will start on default port
+## The backend will start on default port
 
 ## Frontend Setup
 cd frontend
-# Install dependencies
+## Install dependencies
 npm install
 
-# Start development server
+## Start development server
 npm run dev
 
-# The frontend will start on default port 
+## The frontend will start on default port 
 
 # API Endpoints
 
