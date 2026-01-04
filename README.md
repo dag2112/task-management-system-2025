@@ -83,7 +83,6 @@ A secure and scalable Task Management System built with Spring Boot REST API and
 - Edit/delete comments (with permissions)
 
 ### Notifications
-- Real-time notifications
 - Notification center
 - Mark as read/unread
 - Task assignment alerts
@@ -100,11 +99,11 @@ A secure and scalable Task Management System built with Spring Boot REST API and
 ### Backend Structure
 
 src/main/java/com/taskmanagement/
-├── controller/             # REST controllers
-├── service/               # Business logic layer
-├── repository/            # Data access layer
-├── model/                 # JPA entities
-├── dto/                   # Data Transfer Objects
-├── security/              # Security configuration
-├── exception/             # Exception handling
-└── util/                  # Utility classes
+#├── controller/             # REST controllers
+#├── service/               # Business logic layer
+#├── repository/            # Data access layer
+#├── entities/                 # JPA entities
+#├── dto/                   # Data Transfer Objects
+#├── Auths/              # Security configuration
+#├── exception/             # Exception handling
+
