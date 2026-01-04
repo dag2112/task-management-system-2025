@@ -109,8 +109,6 @@ public class UserService {
         switch (role.toUpperCase()) {
             case "ADMIN":
                 return "ROLE_ADMIN";
-            case "LIBRARIAN":
-                return "ROLE_LIBRARIAN";
             default:
                 return "ROLE_USER";
         }
