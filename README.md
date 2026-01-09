@@ -177,7 +177,7 @@ cd backend
 mvn clean install
 mvn spring-boot:run
 
-### The backend will start on default port
+### The backend will start on default port 
 
 ### Frontend Setup
 cd frontend
