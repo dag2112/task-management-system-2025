@@ -67,7 +67,7 @@ A secure and scalable Task Management System built with Spring Boot REST API and
 - Create, Read, Update, Delete tasks
 - Task assignment to users
 - Priority levels (High, Medium, Low)
-- Status tracking (Pending, In Progress, Completed)
+- Status tracking (Pending, In Progress, Completed) 
 - Due date management
 - Search and filter tasks
 
