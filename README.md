@@ -9,7 +9,7 @@ A secure and scalable Task Management System built with Spring Boot REST API and
 - Apply authentication and authorization using JWT
 - Implement collaborative task management with comments and notifications 
 - Demonstrate proper API-Frontend integration
-- Work collaboratively using GitHub version control  
+- Work collaboratively using GitHub version control   
 
 ##  Technology Stack
 
