@@ -111,7 +111,7 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Auth  */}
+        {/* Auth    */}
         <div>
           {isLoggedIn ? (
             <button
